@@ -31,10 +31,32 @@ bw = {
 	"sh1t",
 	"shi",
 	"sh1",
+	-- Spanish section
+	"PUTO",
+	"PVTO",
+	"pto",
+	"pu**",
+	"pu*",
+	"puta",
+	"pvta",
+	"hdp",
+	"idp",
+	"pu",
+	"mierda",
+	"mirda",
+	"merda",
+	"mie*",
+	"mi*",
 }
 uw = {
 	"you",
 	"u",
+	--Spanish
+	"tu",
+	"el",
+	"te",
+	"eres",
+	"ser",
 }
 all = {}
 strict = {}
