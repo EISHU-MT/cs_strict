@@ -31,6 +31,8 @@ bw = {
 	"sh1t",
 	"shi",
 	"sh1",
+}
+sbw = {
 	-- Spanish section
 	"PUTO",
 	"PVTO",
@@ -48,46 +50,63 @@ bw = {
 	"mie*",
 	"mi*",
 }
+--[[
 uw = {
 	"you",
 	"u",
+}
+suw = {
 	--Spanish
 	"tu",
 	"el",
 	"te",
 	"eres",
 	"ser",
-}
+}--]]
 all = {}
+sall = {}
 strict = {}
 
 for i, name in pairs(bw) do
 	if name then -- Register all possible strings for protection
-		local str = uw[1]..name
-		local str2 = uw[2]..name
-		local str3 = uw[1].." "..name
-		local str4 = uw[2].." "..name
-		local str5 = name.." "..uw[2]
-		local str6 = name.." "..uw[1]
-		local str7 = name..""..uw[1]
-		local str8 = name..""..uw[2]
-		table.insert(all, str)
-		table.insert(all, str2)
-		table.insert(all, str3)
-		table.insert(all, str4)
-		table.insert(all, str5)
-		table.insert(all, str6)
-		table.insert(all, str7)
-		table.insert(all, str8)
 		table.insert(all, name)
 	end
 end
 
-function strict.find_word(string)
+for _, word in pairs(sbw) do
+	if word then
+		table.insert(all, word)
+	end
+end
+
+function strict.process_str(str)
+	local words = {}
+	for word in str:gmatch("%w+") do
+		table.insert(words, word)
+	end
+	return words
+end
+
+function strict.find_word(string3)
+	local string1 = tostring(string3)
+	local string = string1:lower()
 	if type(string) == "string" then
 		for i, word in pairs(all) do
-			if string:find(word) or string:match(word) or string == word then
-				return true, "null"
+			for _, hword in pairs(strict.process_str(string)) do
+				local word2 = hword:lower()
+				local to_check = word:lower()
+				if word2:find(to_check) or word2 == to_check then
+					return true, "null"
+				end
+			end
+		end
+		for i, word in pairs(sall) do
+			for _, hword in pairs(strict.process_str(string)) do
+				local word2 = hword:lower()
+				local to_check = word:lower()
+				if word2:find(to_check) or word2 == to_check then
+					return true, "null"
+				end
 			end
 		end
 		return false, "not_found"
